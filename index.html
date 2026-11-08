@@ -23,6 +23,11 @@ if (u) {
   var l = document.getElementById("l");
   l.href = u; l.hidden = false;
   location.href = u;
+    if (/Windows/.test(navigator.userAgent)) {
+    var kapat = function () { setTimeout(function () { window.close(); }, 500); };
+    window.addEventListener("blur", kapat);
+    setTimeout(function () { window.close(); }, 15000);
+  }
 } else {
   document.getElementById("m").textContent = "Geçersiz link.";
 }
