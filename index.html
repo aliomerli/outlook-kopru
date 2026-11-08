@@ -1,0 +1,17 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Outlook'a yönlendirme</title>
+<p id="m" style="font:18px sans-serif;padding:24px">Outlook açılıyor…</p>
+<p style="padding:0 24px"><a id="l" hidden style="font:18px sans-serif">Outlook'ta aç</a></p>
+<script>
+var h = location.hash.slice(1);
+if (/^[A-Za-z0-9%_-]+$/.test(h)) {
+  var u = "ms-outlook://emails/message/open?restID=" + h;
+  var l = document.getElementById("l");
+  l.href = u; l.hidden = false;
+  location.href = u;
+} else {
+  document.getElementById("m").textContent = "Geçersiz link.";
+}
+</script>
