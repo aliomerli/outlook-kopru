@@ -24,6 +24,12 @@ function ac() {
     var l = document.getElementById("l");
     l.href = u; l.hidden = false;
     location.href = u;
+        if (!/Windows/.test(navigator.userAgent)) {
+      document.addEventListener("visibilitychange", function () {
+        if (document.visibilityState === "visible") window.close();
+      });
+    }
+
   } else {
     document.getElementById("m").textContent = "Geçersiz link.";
   }
