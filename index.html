@@ -5,9 +5,21 @@
 <p id="m" style="font:18px sans-serif;padding:24px">Outlook açılıyor…</p>
 <p style="padding:0 24px"><a id="l" hidden style="font:18px sans-serif">Outlook'ta aç</a></p>
 <script>
-var h = location.hash.slice(1);
+var h = location.hash.slice(1), u = "";
 if (/^[A-Za-z0-9%_-]+$/.test(h)) {
-  var u = "ms-outlook://emails/message/open?restID=" + h;
+  if (/Windows/.test(navigator.userAgent)) {
+    try {
+      var r = atob(decodeURIComponent(h).replace(/-/g, "+").replace(/_/g, "/"));
+      var p = 4 + r.charCodeAt(2) + 1;
+      var n = r.charCodeAt(p) | (r.charCodeAt(p + 1) << 8), x = "";
+      for (var i = p + 2; i < p + 2 + n; i++) x += ("0" + r.charCodeAt(i).toString(16)).slice(-2);
+      if (n === 70) u = "outlook:" + x.toUpperCase();
+    } catch (e) {}
+  } else {
+    u = "ms-outlook://emails/message/open?restID=" + h;
+  }
+}
+if (u) {
   var l = document.getElementById("l");
   l.href = u; l.hidden = false;
   location.href = u;
